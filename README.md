@@ -1,0 +1,2 @@
+# NekoMusic
+Discord Musik Bot
