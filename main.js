@@ -117,4 +117,58 @@ client.on('messageCreate', async msg => {
     }
 });
 
+// Join Command
+// Wird später in eine andere Datei verlegt
+
+client.on('messageCreate', async msg => {
+    if(!msg.member.user.bot && msg.guild) {
+        if(msg.content === `${prefix}join`) {
+            if(msg.member.voice.channel) {
+                if(!client.voice.channel) {
+                    const joinEmbed = new MessageEmbed()
+                        .setColor('#eea5cd')
+                        .setTitle('Join')
+                        .setAuthor('NekoMusic', client.user.displayAvatarURL(), 'https://github.com/NekoElite/NekoMusic')
+                        .setDescription('Ich joine in den Voice Channel **' + msg.member.voice.channel.name + '**.')
+                        .setThumbnail(client.user.displayAvatarURL())
+                        .setTimestamp()
+                        .setFooter('Bot erstellt von NekoElite', client.user.displayAvatarURL());
+
+                    msg.channel.send({ embeds: [joinEmbed] });
+
+                    joinVoiceChannel({
+                        channelId: msg.member.voice.channel.id,
+                        guildId: msg.guild.id,
+                        adapterCreator: msg.guild.voiceAdapterCreator
+                    });
+                }
+                else {
+                    const joinE2Embed = new MessageEmbed()
+                        .setColor('#ff3232')
+                        .setTitle(':name_badge: Fehlgeschlagen')
+                        .setAuthor('NekoMusic', client.user.displayAvatarURL(), 'https://github.com/NekoElite/NekoMusic')
+                        .setDescription('Ich befinde mich derzeit in ein anderen Voice Channel.')
+                        .setThumbnail(client.user.displayAvatarURL())
+                        .setTimestamp()
+                        .setFooter('Bot erstellt von NekoElite', client.user.displayAvatarURL());
+
+                msg.channel.send({ embeds: [joinE2Embed] });
+                }
+            }
+            else {
+                const joinE1Embed = new MessageEmbed()
+                    .setColor('#ff3232')
+                    .setTitle(':name_badge: Fehlgeschlagen')
+                    .setAuthor('NekoMusic', client.user.displayAvatarURL(), 'https://github.com/NekoElite/NekoMusic')
+                    .setDescription('Du befindest dich in keinen Voice Channel.')
+                    .setThumbnail(client.user.displayAvatarURL())
+                    .setTimestamp()
+                    .setFooter('Bot erstellt von NekoElite', client.user.displayAvatarURL());
+
+                msg.channel.send({ embeds: [joinE1Embed] });
+            }
+        }
+    }
+});
+
 client.login(token);
