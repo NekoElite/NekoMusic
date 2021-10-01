@@ -1,4 +1,5 @@
 {
     "token": "Your_Bot_Token",
-    "prefix": "!"
+    "prefix": "!",
+    "adminID": "Your_User_ID"
 }
